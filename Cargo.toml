@@ -1,6 +1,31 @@
 [package]
-name = "rs-whisper-stream"
+name = "whisper-stream"
 version = "0.1.0"
 edition = "2024"
+description = "Streaming speech-to-text on top of candle's Whisper implementation: push in PCM audio, get recognized text back chunk by chunk."
+license = "MIT"
 
 [dependencies]
+anyhow = "1"
+candle-core = "0.11.0"
+candle-nn = "0.11.0"
+candle-transformers = "0.11.0"
+tokenizers = "0.23.1"
+hf-hub = { version = "0.5.0", default-features = false, features = ["ureq"] }
+serde_json = "1"
+rand = "0.10.1"
+byteorder = "1"
+flate2 = "1"
+
+# Uncomment if you want to run on GPU / speed up CPU inference respectively.
+# candle-core = { version = "0.8", features = ["cuda"] }
+# candle-core = { version = "0.8", features = ["mkl"] }
+# candle-core = { version = "0.8", features = ["accelerate"] }
+
+[dev-dependencies]
+# Only needed to build the `file_stream` example (reading a .wav file from disk).
+hound = "3.5"
+
+[[example]]
+name = "file_stream"
+path = "examples/file_stream.rs"
